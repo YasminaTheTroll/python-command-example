@@ -28,6 +28,9 @@ class DriveSubsystem(commands2.SubsystemBase):
         self.rearLeft = rev.CANSparkMax(rearLeft, rev.CANSparkMax.MotorType.kBrushless)
         self.rearRight = rev.CANSparkMax(rearRight, rev.CANSparkMax.MotorType.kBrushless)
 
+        self.frontRight.setInverted(True)
+        self.rearRight.setInverted(True)
+
         self.drive_train = MecanumDrive(self.frontLeft, self.rearLeft, self.frontRight, self.rearRight)
         self.drive_train.setDeadband(0.1)
 
