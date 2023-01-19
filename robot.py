@@ -20,8 +20,7 @@ class RobotDriveDemo(wpilib.TimedRobot):
 
         self.drive.setDefaultCommand(DriveCommand(self.drive, self.controller))
         
-        self.controller.Y().onTrue(TurnCommand(self.drive, 90))
-        
+        self.controller.B().onTrue(TurnCommand(self.drive, -1))
 
     def robotPeriodic(self) -> None:
         # This is what allows us to actually run the commands. You will almost 
