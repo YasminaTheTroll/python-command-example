@@ -5,6 +5,7 @@ import commands2
 
 from subsystems.drive import DriveSubsystem
 from commands import DriveCommand, TurnCommand
+from commands.drivetime_command import TimerDriveCommand
 
 # This is the main robot class.
 class RobotDriveDemo(wpilib.TimedRobot):
@@ -21,6 +22,7 @@ class RobotDriveDemo(wpilib.TimedRobot):
         self.drive.setDefaultCommand(DriveCommand(self.drive, self.controller))
         
         self.controller.B().onTrue(TurnCommand(self.drive, -1))
+        self.controller.A().onTrue(TimerDriveCommand(self.drive, 1))
 
     def robotPeriodic(self) -> None:
         # This is what allows us to actually run the commands. You will almost 
