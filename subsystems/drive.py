@@ -1,5 +1,6 @@
 import wpilib
 from wpilib.drive import MecanumDrive
+from wpimath.geometry import Rotation2d
 import commands2
 import navx
 import rev
@@ -39,7 +40,9 @@ class DriveSubsystem(commands2.SubsystemBase):
     def drive(self, x_speed: int, y_speed: int, rot: int) -> None:
         # Here we are invoking the MecanumDrive's own drive method, since we don't need to 
         # reinvent the wheel.
-        self.drive_train.driveCartesian(y_speed, x_speed, wpimath.applyDeadband(rot, 0.1))
+        angle = Rotation2d.fromDegrees(self.gyro.getAngle())
+        
+        self.drive_train.driveCartesian(y_speed, x_speed, wpimath.applyDeadband(rot, 0.1), gyroAngle= angle)
 
     def fullstop(self) -> None:
         # This completely stops all motion on the robot, which is useful, since without 

@@ -2,7 +2,8 @@ import wpilib
 import commands2.button as button
 
 import commands2
-
+from commands.shooter_command import ShooterCommand
+from subsystems.shooter import ShooterSubsystem
 from subsystems.drive import DriveSubsystem
 from commands import DriveCommand, TurnCommand
 from commands.drivetime_command import TimerDriveCommand
@@ -18,11 +19,13 @@ class RobotDriveDemo(wpilib.TimedRobot):
         # to declare anything else here (however, there could be a reason, just probably not a good one).
         self.drive = DriveSubsystem(4, 2, 1, 3)
         self.controller = button.CommandXboxController(0)
+        self.shooter = ShooterSubsystem(8)
 
+        self.shooter.setDefaultCommand(ShooterCommand(self.shooter))
         self.drive.setDefaultCommand(DriveCommand(self.drive, self.controller))
         
         self.controller.B().onTrue(TurnCommand(self.drive, -1))
-        self.controller.A().onTrue(TimerDriveCommand(self.drive, 1))
+        self.controller.A().onTrue(TimerDriveCommand(self.drive, 3))
 
     def robotPeriodic(self) -> None:
         # This is what allows us to actually run the commands. You will almost 
@@ -54,3 +57,5 @@ class RobotDriveDemo(wpilib.TimedRobot):
 # If your code fails to even deploy, but doesn't look wrong otherwise, you forgot this.
 if __name__ == "__main__":
     wpilib.run(RobotDriveDemo)
+
+#py -3 robot.py deploy

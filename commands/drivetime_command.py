@@ -18,10 +18,11 @@ class TimerDriveCommand(commands2.CommandBase):
         self.timer.start()
 
     def execute(self) -> None:
-        self.drive_subsystem.drive(0, 0.2, 0)
+        self.drive_subsystem.drive(0, 0.2, 0.3)
 
-    def end(self) -> None:
-        pass
+    def end(self, interrupted: bool) -> None:
+        self.timer.reset()
+        self.timer.stop()
 
     def isFinished(self) -> bool:
         return self.timer.hasElapsed(self.sec)
