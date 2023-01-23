@@ -5,6 +5,8 @@ import commands2
 from commands.shooter_command import ShooterCommand
 from subsystems.shooter import ShooterSubsystem
 from subsystems.drive import DriveSubsystem
+from subsystems.transport import TransportSubsystem
+from commands.transport_command import TransportCommand
 from commands import DriveCommand, TurnCommand
 from commands.drivetime_command import TimerDriveCommand
 
@@ -20,7 +22,9 @@ class RobotDriveDemo(wpilib.TimedRobot):
         self.drive = DriveSubsystem(4, 2, 1, 3)
         self.controller = button.CommandXboxController(0)
         self.shooter = ShooterSubsystem(8)
+        self.transport = TransportSubsystem()
 
+        self.transport.setDefaultCommand(TransportCommand(self.transport))
         self.shooter.setDefaultCommand(ShooterCommand(self.shooter))
         self.drive.setDefaultCommand(DriveCommand(self.drive, self.controller))
         
