@@ -11,22 +11,22 @@ class TransportSubsystem(SubsystemBase):
     def __init__(self) -> None:
         super().__init__()
 
-        self.outerbelt = ctre.VictorSPX(7)
-        self.innerbelt = ctre.VictorSPX(6)
+        self.outerbelt = ctre.WPI_VictorSPX(7)
+        self.innerbelt = ctre.WPI_VictorSPX(6)
         self.outerinput = DigitalInput(4)
         self.innerinput = DigitalInput(3)
 
     def enable_outerbelt(self) -> None:
-        self.outerbelt.set(0.5)
+        self.outerbelt.set(0.2)
 
     def enable_innerbelt(self) -> None:
-        self.innerbelt.set(-0.5)
+        self.innerbelt.set(-0.2)
 
     def disable_outerbelt(self) -> None:
         self.outerbelt.set(0)
 
     def disable_innerbelt(self) -> None:
-        self.outerbelt.set(0)
+        self.innerbelt.set(0)
 
     def outerball_input(self) -> bool:
         return self.outerinput.get()
