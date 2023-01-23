@@ -12,5 +12,15 @@ class TransportCommand(CommandBase):
         self.addRequirements(self.transport)
 
     def execute(self) -> None:
-        if #innerinput is true turn off inner if both true turn off outer
-    
+        if self.transport.innerball_input():
+            self.transport.disable_innerbelt()
+        else: 
+            self.transport.enable_innerbelt()
+
+        if self.transport.hasbothball_input():
+            self.transport.disable_outerbelt()
+        else:
+            self.transport.enable_outerbelt()
+
+#innerinput is true turn off inner 
+# if both true turn off outer
