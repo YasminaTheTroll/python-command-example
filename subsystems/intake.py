@@ -11,7 +11,8 @@ class IntakeSubsystem(SubsystemBase):
         super().__init__()
 
         self.spintake = ctre.WPI_VictorSPX(5)
-        self.solenoid = DoubleSolenoid(wpilib.PneumaticsModuleType.CTREPCM, 3, 5)
+        self.solenoid = DoubleSolenoid(wpilib.PneumaticsModuleType.CTREPCM, 3, 4)
+        self.disable_sole()
 
     def enable_spintake(self) -> None:
         self.spintake.set(0.1)
@@ -21,6 +22,9 @@ class IntakeSubsystem(SubsystemBase):
 
     def disable_spintake(self) -> None:
         self.spintake.set(0)
+
+    def disable_sole(self) -> None:
+        self.solenoid.set(DoubleSolenoid.Value.kReverse)
 
     def toggle_sole(self) -> None:
         self.solenoid.toggle()

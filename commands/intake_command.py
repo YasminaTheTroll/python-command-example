@@ -15,6 +15,6 @@ class IntakeCommand(CommandBase):
         self.intake.enable_sole()
         self.intake.enable_spintake()
 
-    def end(self) -> None:
-        self.intake.toggle_sole()
+    def end(self, interrupted: bool) -> None:
+        self.intake.disable_sole()
         self.intake.disable_spintake()
