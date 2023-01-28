@@ -8,11 +8,13 @@ from subsystems.shooter import ShooterSubsystem
 from subsystems.drive import DriveSubsystem
 from subsystems.transport import TransportSubsystem
 from subsystems.intake import IntakeSubsystem
+from subsystems.hooks import HooksSubsystem
 
 from commands.transport_command import TransportCommand
 from commands import DriveCommand, TurnCommand
 from commands.drivetime_command import TimerDriveCommand
 from commands.intake_command import IntakeCommand
+from commands.hooks_command import HooksCommand
 
 # This is the main robot class.
 class RobotDriveDemo(wpilib.TimedRobot):
@@ -28,6 +30,7 @@ class RobotDriveDemo(wpilib.TimedRobot):
         self.shooter = ShooterSubsystem(8)
         self.transport = TransportSubsystem()
         self.intake = IntakeSubsystem()
+        self.hooks = HooksSubsystem()
 
         self.transport.setDefaultCommand(TransportCommand(self.transport))
         self.shooter.setDefaultCommand(ShooterCommand(self.shooter))
@@ -36,6 +39,7 @@ class RobotDriveDemo(wpilib.TimedRobot):
         self.controller.B().onTrue(TurnCommand(self.drive, -1))
         self.controller.A().onTrue(TimerDriveCommand(self.drive, 3))
         self.controller.Y().toggleOnTrue(IntakeCommand(self.intake))
+        self.controller.X().toggleOnTrue(HooksCommand(self.hooks))
 
     def robotPeriodic(self) -> None:
         # This is what allows us to actually run the commands. You will almost 
