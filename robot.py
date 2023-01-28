@@ -2,7 +2,10 @@ import wpilib
 import commands2.button as button
 import commands2
 
+from commands.timerintake_command import TimerIntakeCommand
 from commands.shooter_command import ShooterCommand
+from commands.autotransport_command import AutoTransportCommand
+from commands.stageball_command import StageBallCommand
 
 from subsystems.shooter import ShooterSubsystem
 from subsystems.drive import DriveSubsystem
@@ -41,6 +44,17 @@ class RobotDriveDemo(wpilib.TimedRobot):
         self.controller.Y().toggleOnTrue(IntakeCommand(self.intake))
         self.controller.X().toggleOnTrue(HooksCommand(self.hooks))
 
+        self.sequence = TimerDriveCommand(self.drive, 3)\
+                   .andThen(IntakeCommand(self.intake)\
+                            .raceWith(AutoTransportCommand(self.transport)))\
+                    .andThen(StageBallCommand(self.transport))
+                   
+        
+        #drive forward, lower/turn on spintake,
+        #turn, turn on transport/flywheel
+
+
+
     def robotPeriodic(self) -> None:
         # This is what allows us to actually run the commands. You will almost 
         # never need to write this line yourself.
@@ -50,7 +64,7 @@ class RobotDriveDemo(wpilib.TimedRobot):
 
     def autonomousInit(self) -> None:
         # We'll use this to set the autonomous command on the actual robot.
-        pass
+        self.sequence.schedule()
 
     def autonomousPeriodic(self) -> None:
         # We rarely do anything with this function.
@@ -58,7 +72,7 @@ class RobotDriveDemo(wpilib.TimedRobot):
 
     def teleopInit(self) -> None:
         # Mostly used to stop the autonomous command, if it's still running.
-        pass
+        self.sequence.cancel()
 
     def teleopPeriodic(self) -> None:
         # You'll never use this. All TeleOp behaviours should be registered 

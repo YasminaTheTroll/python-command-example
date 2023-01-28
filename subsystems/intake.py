@@ -15,7 +15,7 @@ class IntakeSubsystem(SubsystemBase):
         self.disable_sole()
 
     def enable_spintake(self) -> None:
-        self.spintake.set(0.1)
+        self.spintake.set(-0.1)
 
     def enable_sole(self) -> None:
         self.solenoid.set(DoubleSolenoid.Value.kForward)
